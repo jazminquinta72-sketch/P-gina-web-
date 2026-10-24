@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f8f5ed">
+<meta name="description" content="Quinta Jazmín, naturaleza y descanso en Coronel Oviedo, Paraguay.">
+<title>Quinta Jazmín | Naturaleza y descanso</title>
+
+<style>
+:root {
+  --oro: #c4a15c;
+  --oro-claro: #f0dba8;
+  --crema: #faf7ef;
+  --oscuro: #29251c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--crema);
+  color: #514a3c;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body.bloqueado { overflow: hidden; }
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+
+/* IMÁGENES */
+#entrada {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    linear-gradient(#19160e55, #19160eaa),
+    url("https://i.ibb.co/3996MZFR/IMG-20261023-WA0025.jpg") center/cover no-repeat;
+}
+
+.puerta {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  z-index: 2;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 22px, #24160930 23px 26px),
+    linear-gradient(90deg, #3b2617, #80552f, #4a2d19);
+  border: 4px solid var(--oro);
+  box-shadow: inset 0 0 35px #120b05;
+  transition: transform 1.5s cubic-bezier(.65, 0, .25, 1);
+  pointer-events: none;
+}
+
+.puerta::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 2px solid #e3c47c80;
+}
+
+.puerta::after {
+  content: "";
+  position: absolute;
+  inset: 25% 12%;
+  border: 2px solid #e3c47c40;
+}
+
+.puerta.izquierda { left: 0; border-right: 3px solid var(--oro); }
+.puerta.derecha { right: 0; border-left: 3px solid var(--oro); }
+
+.picaporte {
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle at 30% 30%, #fff3bd, #c49a48 65%, #72501e);
+  border-radius: 50%;
+  box-shadow: 0 0 12px #f0dba8;
+}
+
+.izquierda .picaporte { right: 18px; }
+.derecha .picaporte { left: 18px; }
+
+.bienvenida {
+  position: relative;
+  z-index: 5;
+  width: min(88%, 430px);
+  padding: 35px 20px;
+  text-align: center;
+  color: white;
+  background: rgba(30, 25, 16, .91);
+  border: 1px solid var(--oro-claro);
+  box-shadow: 0 0 40px #0008;
+  transition: opacity .35s ease;
+}
+
+.flor { color: var(--oro-claro); font-size: 38px; }
+
+.bienvenida .sobrelinea {
+  margin-top: 12px;
+  font: 11px Arial, sans-serif;
+  letter-spacing: 5px;
+}
+
+.bienvenida h1 {
+  margin: 15px 0;
+  font-size: clamp(38px, 9vw, 62px);
+  font-style: italic;
+  font-weight: normal;
+  color: var(--oro-claro);
+}
+
+.bienvenida .descripcion {
+  margin-bottom: 25px;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+#botonAbrir {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  padding: 15px 23px;
+  border: 1px solid #f4dfad;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #f0dba8, #b38b43);
+  color: #292116;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#botonAbrir:active { transform: scale(.97); }
+
+#entrada.abriendo .puerta.izquierda { transform: translateX(-105%); }
+#entrada.abriendo .puerta.derecha { transform: translateX(105%); }
+#entrada.abriendo .bienvenida { opacity: 0; pointer-events: none; }
+#entrada.oculta { display: none; }
+
+/* NAVEGACIÓN */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fffefa;
+  border-bottom: 1px solid #e6d7b9;
+}
+
+nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.logo { font-size: 25px; font-style: italic; color: var(--oscuro); }
+
+.logo span {
+  display: block;
+  text-align: center;
+  font: 10px Arial, sans-serif;
+  letter-spacing: 3px;
+  color: var(--oro);
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  font: 12px Arial, sans-serif;
+}
+
+.menu a:hover { color: var(--oro); }
+
+.menu .reserva {
+  padding: 11px 15px;
+  color: white;
+  background: #a78342;
+}
+
+/* PORTADA */
+.hero {
+  min-height: 570px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 20px;
+  text-align: center;
+  color: white;
+  background:
+    linear-gradient(#18190e66, #18190e99),
+    url("https://i.ibb.co/DPmnDm9G/IMG-20261023-WA0024.jpg") center/cover no-repeat;
+}
+
+.hero-contenido { max-width: 760px; }
+
+.etiqueta {
+  color: var(--oro-claro);
+  font: 12px Arial, sans-serif;
+  letter-spacing: 4px;
+}
+
+.hero h2 {
+  margin: 22px 0;
+  font-size: clamp(46px, 10vw, 84px);
+  font-weight: normal;
+  font-style: italic;
+}
+
+.hero p { margin-bottom: 27px; font-size: 17px; line-height: 1.8; }
+
+.ubicacion-mini { margin-top: 24px; font: 14px Arial, sans-serif; }
+
+.boton-dorado {
+  display: inline-block;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #f0dba8, #b38b43);
+  color: #2e2516;
+  border: 1px solid #f0dba8;
+  font: bold 12px Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+/* SECCIONES */
+section { scroll-margin-top: 100px; }
+
+.seccion {
+  max-width: 1150px;
+  margin: auto;
+  padding: 75px 5%;
+}
+
+.titulo { margin-bottom: 40px; text-align: center; }
+
+.titulo small {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--oro);
+  font: 11px Arial, sans-serif;
+  letter-spacing: 4px;
+}
+
+.titulo h2 {
+  color: var(--oscuro);
+  font-size: clamp(30px, 5vw, 44px);
+  font-style: italic;
+  font-weight: normal;
+}
+
+.titulo p { margin-top: 15px; line-height: 1.8; }
+
+.presentacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 35px;
+}
+
+.presentacion img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border: 5px solid white;
+}
+
+.presentacion h3 {
+  margin-bottom: 20px;
+  color: #96723a;
+  font-size: 32px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.presentacion p { margin-bottom: 18px; line-height: 1.9; }
+
+.frase { color: #96723a; font-size: 19px; font-style: italic; }
+
+/* GALERÍA */
+#galeria { background: #fffefa; }
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.foto {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  background: #e7decc;
+  border: 1px solid #e3d2ac;
+}
+
+.foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s;
+}
+
+.foto:hover img { transform: scale(1.06); }
+
+.foto p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 25px 10px 13px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  background: linear-gradient(transparent, #000b);
+}
+
+.aviso-fotos {
+  margin-top: 22px;
+  color: #77705f;
+  text-align: center;
+  font: 13px/1.7 Arial, sans-serif;
+}
+
+/* DETALLES */
+.detalles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.detalle {
+  padding: 28px 15px;
+  text-align: center;
+  background: #fffefa;
+  border: 1px solid #e2d2af;
+}
+
+.detalle span {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--oro);
+  font-size: 30px;
+}
+
+.detalle h3 { margin-bottom: 10px; font-size: 20px; font-weight: normal; }
+.detalle p { font: 13px/1.8 Arial, sans-serif; }
+
+/* UBICACIÓN Y REDES */
+.bloque-final { background: #302b20; color: #f9f3e6; }
+.bloque-final .titulo h2 { color: #f9f3e6; }
+
+.final-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.panel { padding: 25px; border: 1px solid var(--oro); text-align: center; }
+
+.panel h3 {
+  margin-bottom: 18px;
+  color: var(--oro-claro);
+  font-size: 27px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.panel p { margin-bottom: 20px; line-height: 1.8; }
+
+.mapa {
+  display: block;
+  width: 100%;
+  height: 230px;
+  margin-top: 20px;
+  border: 0;
+}
+
+.redes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+.redes a { padding: 13px 18px; border: 1px solid var(--oro); }
+
+.redes a:hover { color: #29251c; background: var(--oro-claro); }
+
+/* PIE DE PÁGINA */
+footer {
+  padding: 28px 15px;
+  text-align: center;
+  background: #211e17;
+  color: var(--oro-claro);
+}
+
+footer p { font: 12px/2 Arial, sans-serif; }
+
+.whatsapp {
+  position: fixed;
+  right: 17px;
+  bottom: 17px;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  color: white;
+  background: #20b65b;
+  box-shadow: 0 5px 20px #0003;
+  font: bold 25px Arial, sans-serif;
+}
+
+/* CELULARES */
+@media (max-width: 760px) {
+  nav { flex-direction: column; gap: 13px; }
+  .menu { justify-content: center; gap: 12px; }
+  .menu a { font-size: 11px; }
+  .hero { min-height: 480px; }
+  .seccion { padding: 55px 5%; }
+
+  .presentacion, .final-grid { grid-template-columns: 1fr; }
+  .presentacion img { height: 270px; }
+
+  .galeria {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .foto { height: 180px; }
+  .foto p { font-size: 13px; }
+  .detalles { grid-template-columns: 1fr; }
+  .panel { padding: 20px 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .puerta { transition-duration: .2s; }
+}
+</style>
+</head>
+
+<body class="bloqueado">
+
+<!-- ENTRADA CON PUERTAS -->
+<div id="entrada">
+  <div class="puerta izquierda"><span class="picaporte"></span></div>
+  <div class="puerta derecha"><span class="picaporte"></span></div>
+
+  <div class="bienvenida">
+    <div class="flor">✿</div>
+    <p class="sobrelinea">BIENVENIDOS A</p>
+    <h1>Quinta Jazmín</h1>
+    <p class="descripcion">Naturaleza, descanso<br>y momentos especiales.</p>
+    <button id="botonAbrir" type="button">ABRIR LAS PUERTAS ✧</button>
+  </div>
+</div>
+
+<!-- CABECERA -->
+<header>
+  <nav>
+    <a class="logo" href="#inicio">
+      Quinta Jazmín
+      <span>NATURALEZA &amp; DESCANSO</span>
+    </a>
+
+    <div class="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">La quinta</a>
+      <a href="#galeria">Galería</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#redes">Redes</a>
+      <a class="reserva" href="https://wa.me/595971736867?text=Hola%2C%20quisiera%20consultar%20por%20una%20reserva%20en%20Quinta%20Jazm%C3%ADn.">Reservar</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<!-- PORTADA -->
+<section class="hero" id="inicio">
+  <div class="hero-contenido">
+    <div class="etiqueta">UN LUGAR PARA DISFRUTAR</div>
+    <h2>Quinta Jazmín</h2>
+    <p>El lugar perfecto para desconectarte de la rutina.<br>Momentos únicos, rodeados de naturaleza.</p>
+    <a class="boton-dorado" href="https://wa.me/595971736867?text=Hola%2C%20quisiera%20consultar%20por%20una%20reserva%20en%20Quinta%20Jazm%C3%ADn.">RESERVÁ POR WHATSAPP</a>
+    <div class="ubicacion-mini">⌖ Coronel Oviedo, Paraguay</div>
+  </div>
+</section>
+
+<!-- PRESENTACIÓN -->
+<section class="seccion" id="nosotros">
+  <div class="presentacion">
+    <img src="https://i.ibb.co/3Qn61jM/IMG-20261023-WA0023.jpg" alt="Quinta Jazmín" loading="lazy">
+
+    <div>
+      <h3>Un rincón especial para vos</h3>
+      <p>Bienvenidos a Quinta Jazmín, un espacio para disfrutar de la naturaleza, compartir con tus seres queridos y crear recuerdos inolvidables.</p>
+      <p>Un ambiente de encanto rústico, detalles elegantes y tranquilidad para desconectarte de la rutina.</p>
+      <p class="frase">“Un espacio para descansar, disfrutar y crear recuerdos.”</p>
+      <a class="boton-dorado" href="https://wa.me/595971736867?text=Hola%2C%20quisiera%20conocer%20m%C3%A1s%20sobre%20Quinta%20Jazm%C3%ADn.">CONOCER MÁS</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA CON TUS 14 FOTOS -->
+<section id="galeria">
+  <div class="seccion">
+    <div class="titulo">
+      <small>NUESTROS ESPACIOS</small>
+      <h2>Galería de momentos</h2>
+      <p>Descubrí cada rincón de Quinta Jazmín.</p>
+    </div>
+
+    <div class="galeria">
+      <div class="foto"><img src="https://i.ibb.co/3996MZFR/IMG-20261023-WA0025.jpg" alt="Quinta Jazmín 1" loading="lazy"><p>Momentos únicos</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/DPmnDm9G/IMG-20261023-WA0024.jpg" alt="Quinta Jazmín 2" loading="lazy"><p>Rodeados de naturaleza</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/3Qn61jM/IMG-20261023-WA0023.jpg" alt="Quinta Jazmín 3" loading="lazy"><p>Un lugar para disfrutar</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/q3rm72hJ/IMG-20261023-WA0022.jpg" alt="Quinta Jazmín 4" loading="lazy"><p>Compartí con los tuyos</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/Z1cR0DzB/IMG-20261023-WA0021.jpg" alt="Quinta Jazmín 5" loading="lazy"><p>Descanso y tranquilidad</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/JwjJwsb0/IMG-20261023-WA0020.jpg" alt="Quinta Jazmín 6" loading="lazy"><p>Tu próxima escapada</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/7xGwzJBQ/IMG-20261023-WA0019.jpg" alt="Quinta Jazmín 7" loading="lazy"><p>Detalles especiales</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/sJ5L2LCL/IMG-20261023-WA0018.jpg" alt="Quinta Jazmín 8" loading="lazy"><p>Un ambiente natural</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/hFL2KtRh/IMG-20261023-WA0017.jpg" alt="Quinta Jazmín 9" loading="lazy"><p>Momentos para recordar</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/S4PKytkj/IMG-20261023-WA0016.jpg" alt="Quinta Jazmín 10" loading="lazy"><p>Viví la experiencia</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/5g2j8zJn/IMG-20261023-WA0015.jpg" alt="Quinta Jazmín 11" loading="lazy"><p>Un lugar especial</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/x8qK09Cd/IMG-20261023-WA0014-1.jpg" alt="Quinta Jazmín 12" loading="lazy"><p>Disfrutá cada momento</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/JjzPrWF6/IMG-20261023-WA0012.jpg" alt="Quinta Jazmín 13" loading="lazy"><p>Naturaleza y encanto</p></div>
+
+      <div class="foto"><img src="https://i.ibb.co/3996MZFR/IMG-20261023-WA0025.jpg" alt="Quinta Jazmín 14" loading="lazy"><p>Te esperamos</p></div>
+    </div>
+
+    <p class="aviso-fotos">Fotografías de Quinta Jazmín.</p>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section class="seccion" id="experiencia">
+  <div class="titulo">
+    <small>QUINTA JAZMÍN</small>
+    <h2>Una experiencia especial</h2>
+    <p>Compartí con familia y amigos en un ambiente especial.</p>
+  </div>
+
+  <div class="detalles">
+    <div class="detalle">
+      <span>❀</span>
+      <h3>Naturaleza</h3>
+      <p>Un entorno ideal para desconectarte de la rutina.</p>
+    </div>
+
+    <div class="detalle">
+      <span>✧</span>
+      <h3>Momentos inolvidables</h3>
+      <p>Un espacio para compartir, descansar y celebrar.</p>
+    </div>
+
+    <div class="detalle">
+      <span>♡</span>
+      <h3>Reservas fáciles</h3>
+      <p>Consultá disponibilidad y precios por WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN Y REDES -->
+<section class="bloque-final">
+  <div class="seccion">
+    <div class="titulo">
+      <small>VENÍ A CONOCERNOS</small>
+      <h2>Te esperamos en Quinta Jazmín</h2>
+    </div>
+
+    <div class="final-grid">
+      <div class="panel" id="ubicacion">
+        <h3>⌖ Nuestra ubicación</h3>
+        <p>Coronel Oviedo, Caaguazú, Paraguay.</p>
+
+        <a class="boton-dorado" href="https://www.google.com/maps/search/?api=1&query=HG9X%2BQ5W%20Coronel%20Oviedo%20Paraguay" target="_blank" rel="noopener">VER UBICACIÓN EN MAPS</a>
+
+        <iframe class="mapa" src="https://maps.google.com/maps?q=HG9X%2BQ5W%20Coronel%20Oviedo%20Paraguay&output=embed" loading="lazy" title="Ubicación de Quinta Jazmín"></iframe>
+      </div>
+
+      <div class="panel" id="redes">
+        <h3>Nuestras redes sociales</h3>
+        <p>Seguinos para conocer nuestros espacios y novedades.</p>
+
+        <div class="redes">
+          <a href="https://www.instagram.com/quinta__jazmin/" target="_blank" rel="noopener">Instagram ↗</a>
+          <a href="https://www.tiktok.com/jazmin.eventos2" target="_blank" rel="noopener">TikTok ↗</a>
+        </div>
+
+        <p style="color:#e5ca8b;font-style:italic">¡No te pierdas de nada!</p>
+        <hr style="border:0;border-top:1px solid #9e793c;margin:25px 0">
+
+        <h3>¿Querés reservar?</h3>
+        <p>Escribinos para consultar disponibilidad, precios y toda la información.</p>
+        <a class="boton-dorado" href="https://wa.me/595971736867?text=Hola%2C%20quisiera%20consultar%20por%20una%20reserva%20en%20Quinta%20Jazm%C3%ADn.">0971 736 867</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <a class="logo" href="#inicio" style="color:#f9f3e6">✿ Quinta Jazmín</a>
+  <p>Coronel Oviedo, Paraguay</p>
+  <p>Naturaleza · Descanso · Momentos especiales</p>
+  <p>© <span id="anio"></span> Quinta Jazmín</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/595971736867?text=Hola%2C%20quisiera%20consultar%20por%20una%20reserva%20en%20Quinta%20Jazm%C3%ADn." target="_blank" rel="noopener" aria-label="Contactar por WhatsApp" title="Reservar por WhatsApp">☎</a>
+
+<script>
+(function () {
+  const entrada = document.getElementById("entrada");
+  const boton = document.getElementById("botonAbrir");
+  let abierta = false;
+
+  function abrirPuertas() {
+    if (abierta) return;
+    abierta = true;
+
+    entrada.classList.add("abriendo");
+    boton.disabled = true;
+    document.body.classList.remove("bloqueado");
+
+    window.setTimeout(function () {
+      entrada.classList.add("oculta");
+      entrada.setAttribute("aria-hidden", "true");
+    }, 1600);
+  }
+
+  boton.addEventListener("click", abrirPuertas);
+
+  document.getElementById("anio").textContent =
+    new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
